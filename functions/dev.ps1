@@ -128,8 +128,9 @@ if ($VolumeOrDirectory) {
       $llmKeys = "${llmKeys} --env CLAUDE_API_KEY=`"${CLAUDE_API_KEY}`""
     }
 
+    $tz = "-e TZ=Europe/Berlin"
 
-    Invoke-Expression "docker run ${ports} ${name} --privileged --rm ${identityEnv} ${llmKeys} --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmMount $gpgMount $sharedMount $historyMount $zoxideMount $tmuxResurrectMount $dockerMount $kubeMount $ngrokMount -it --memory 24gb ${DOCKER_DEV_ENV}${tag}"
+    Invoke-Expression "docker run ${ports} ${name} --privileged --rm ${identityEnv} ${llmKeys} ${tz} --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmMount $gpgMount $sharedMount $historyMount $zoxideMount $tmuxResurrectMount $dockerMount $kubeMount $ngrokMount -it --memory 24gb ${DOCKER_DEV_ENV}${tag}"
 
     # Undo title change
     $Host.UI.RawUI.WindowTitle = "Windows PowerShell"
