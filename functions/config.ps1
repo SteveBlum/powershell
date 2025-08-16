@@ -13,7 +13,7 @@ Function SaveConfig {
 
     $environments = New-Object System.Collections.ArrayList
     if ($fixedEnvironments) {
-        $environments.Add($fixedEnvironments)
+        $environments = $fixedEnvironments
     }
 
     $indexToRemove
