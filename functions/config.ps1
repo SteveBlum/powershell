@@ -5,12 +5,7 @@ Function SaveConfig {
 	[object]$Data
     )
 
-    
-    $jsonContent = LoadRaw 
-
-    # Convert the JSON content to PowerShell objects
-    $fixedEnvironments = $jsonContent | ConvertFrom-Json
-
+	  $fixedEnvironments = LoadConfigAll
     $environments = New-Object System.Collections.ArrayList
     if ($fixedEnvironments) {
         $environments = $fixedEnvironments
@@ -27,11 +22,9 @@ Function SaveConfig {
     if ($null -ne $indexToRemove) {
 	    $environments.removeAt($indexToRemove)
     }
-
     if ($Data) {
-	    $index = $environments.Add($Data)
+	    $environments.Add($Data) > $null
     }
-
     $jsonOutput = ConvertTo-Json @($environments) -Depth 5
     $jsonOutput | Out-File $environmentsPath
 }
@@ -64,4 +57,17 @@ Function LoadRaw {
     catch {
 	    return "[]"
     }
+}
+
+Function LoadConfigAll {
+	$SourceJson = LoadRaw
+	$Target = New-Object System.Collections.ArrayList
+	if($SourceJson -eq $null) {
+		return $Target
+	}
+	$Source = $SourceJson | ConvertFrom-Json
+	foreach( $row in $Source ) {
+		$Target.Add($Row) > $null
+	}
+	return ,$Target
 }
