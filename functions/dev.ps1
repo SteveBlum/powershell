@@ -110,7 +110,7 @@ if ($VolumeOrDirectory) {
     }
 
     $dockerMount = "--mount type=bind,src=//var/run/docker.sock,target=//var/run/docker.sock"
-    $historyMount = "--mount type=volume,src=$history,target=/root/.history"
+    $historyMount = "--mount type=volume,src=$history,target=/root/.history --env HISTFILE=/root/.history/.bash_history"
     $zoxideMount = "--mount type=volume,src=$zoxide,target=/root/.local/share/zoxide"
     $tmuxResurrectMount = "--mount type=volume,src=$tmuxResurrect,target=/root/.local/share/tmux/resurrect"
 
