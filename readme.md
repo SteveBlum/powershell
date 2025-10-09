@@ -114,18 +114,18 @@ Update this repository with a git pull to keep up with the latest changes.
 
 Following variables can be set in the `variables.ps1`.
 
-| name             | description                                                                                                | example                  |
-| ---------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------ |
-| DOCKER_DEV_ENV   | docker image to use for the dev environment                                                                | registry.tpoe.dev/dev    |
-| REMOTE_DEV_ENV   | comma seperated list of 'ssh connection' strings                                                           | 192.168.0.1,192.168.0.2  |
-| SSH_DIRECTORY    | directory that include ssh keys to be used in the dev container                                            | C:/Users/thomas/.ssh     |
-| GPG_DIRECTORY    | directory that include gpg configurations                                                                  | "C:/Users/thomas/.gnupg" |
-| SHARED_DIRECTORY | directory that is mounted to easily exchange files between the host system and the development environment | "C:/Users/thomas/shared" |
-| KUBE_DIRECTORY   | directory that include kubectl configuration                                                               | C:/Users/thomas/.kube    |
-| NGROK_DIRECTORY  | directory that include ngrok configuration                                                                 | C:/Users/thomas/.ngrok   |
-| GEMINI_API_KEY   | API Key for Google Gemini                                                                                  | A1234B5678C              |
-| CLAUDE_API_KEY   | API Key for Anthropic Claude                                                                               | A1234B5678C              |
-
+| name                      | description                                                                                                | example                  |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------ |
+| DOCKER_DEV_ENV            | docker image to use for the dev environment                                                                | registry.tpoe.dev/dev    |
+| REMOTE_DEV_ENV            | comma seperated list of 'ssh connection' strings                                                           | 192.168.0.1,192.168.0.2  |
+| SSH_DIRECTORY             | directory that include ssh keys to be used in the dev container                                            | C:/Users/thomas/.ssh     |
+| GPG_DIRECTORY             | directory that include gpg configurations                                                                  | "C:/Users/thomas/.gnupg" |
+| SHARED_DIRECTORY          | directory that is mounted to easily exchange files between the host system and the development environment | "C:/Users/thomas/shared" |
+| KUBE_DIRECTORY            | directory that include kubectl configuration                                                               | C:/Users/thomas/.kube    |
+| NGROK_DIRECTORY           | directory that include ngrok configuration                                                                 | C:/Users/thomas/.ngrok   |
+| GEMINI_API_KEY            | API Key for Google Gemini                                                                                  | A1234B5678C              |
+| CLAUDE_API_KEY            | API Key for Anthropic Claude                                                                               | A1234B5678C              |
+| AZURE_CACHE_DIRECTORY     | directory that contains the Azure CLI cache                                                                | "C:/Users/steve/.azure   |
 
 ## Next
 
