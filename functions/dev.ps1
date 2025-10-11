@@ -134,6 +134,12 @@ if ($VolumeOrDirectory) {
     if ($CLAUDE_API_KEY) {
       $llmKeys = "${llmKeys} --env CLAUDE_API_KEY=`"${CLAUDE_API_KEY}`""
     }
+    if ($LLM_PROVIDER) {
+      $llmKeys = "${llmKeys} --env LLM_PROVIDER=`"${LLM_PROVIDER}`""
+    }
+    if ($LLM_MODEL) {
+      $llmKeys = "${llmKeys} --env LLM_MODEL=`"${LLM_MODEL}`""
+    }
 
     $tz = "-e TZ=Europe/Berlin"
 

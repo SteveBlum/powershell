@@ -126,6 +126,8 @@ Following variables can be set in the `variables.ps1`.
 | GEMINI_API_KEY            | API Key for Google Gemini                                                                                  | A1234B5678C              |
 | CLAUDE_API_KEY            | API Key for Anthropic Claude                                                                               | A1234B5678C              |
 | AZURE_CACHE_DIRECTORY     | directory that contains the Azure CLI cache                                                                | "C:/Users/steve/.azure   |
+| LLM_PROVIDER              | LLM provider used by default in mcp-cli                                                                    | anthropic                |
+| LLM_MODEL                 | LLM model used by default in mcp-cli                                                                       | claude-sonnet-4-2025051   |
 
 ## Next
 
