@@ -30,8 +30,6 @@ if ($VolumeOrDirectory) {
         $history = $directoryOrVolume + '-history'
     }
 
-    $zoxide = "dev-zoxide"
-
     $tmuxResurrect = "dev-resurrect"
     if ($mountType -eq "volume") {
         $tmuxResurrect = $directoryOrVolume + '-resurrect'
@@ -113,10 +111,14 @@ if ($VolumeOrDirectory) {
         $azureCacheMount = "--mount type=bind,src=$AZURE_CACHE_DIRECTORY,target=/root/.azure"
     }
 
+    $zoxide = "dev-zoxide"
+
     $dockerMount = "--mount type=bind,src=//var/run/docker.sock,target=//var/run/docker.sock"
     $historyMount = "--mount type=volume,src=$history,target=/root/.history --env HISTFILE=/root/.history/.bash_history"
     $zoxideMount = "--mount type=volume,src=$zoxide,target=/root/.local/share/zoxide"
     $tmuxResurrectMount = "--mount type=volume,src=$tmuxResurrect,target=/root/.local/share/tmux/resurrect"
+    $pipxMount = "--mount type=volume,src=dev-pipx,target=/root/.pipx"
+    $npmMount = "--mount type=volume,src=dev-npm,target=/root/.npm"
 
     $identityEnv = ""
     $activeIdentity = LoadActiveIdentity 
@@ -143,7 +145,7 @@ if ($VolumeOrDirectory) {
 
     $tz = "-e TZ=Europe/Berlin"
 
-    Invoke-Expression "docker run ${ports} ${name} --privileged --rm ${identityEnv} ${llmKeys} ${tz} --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmMount $gpgMount $sharedMount $historyMount $zoxideMount $tmuxResurrectMount $dockerMount $kubeMount $ngrokMount $azureCacheMount -it --memory 24gb ${DOCKER_DEV_ENV}${tag}"
+    Invoke-Expression "docker run ${ports} ${name} --privileged --rm ${identityEnv} ${llmKeys} ${tz} --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmMount $gpgMount $sharedMount $historyMount $zoxideMount $tmuxResurrectMount $dockerMount $pipxMount $npmMount $kubeMount $ngrokMount $azureCacheMount -it --memory 24gb ${DOCKER_DEV_ENV}${tag}"
 
     # Undo title change
     $Host.UI.RawUI.WindowTitle = "Windows PowerShell"
