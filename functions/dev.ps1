@@ -77,9 +77,9 @@ if ($VolumeOrDirectory) {
         $sshMount = "--mount type=bind,src=$SSH_DIRECTORY,target=/root/.ssh" 
     }
 	
-	$npmMount = ""
+	$npmrcMount = ""
     if ($NPM_FILE) {
-        $npmMount = "--mount type=bind,src=$NPM_FILE,target=/root/.npmrc" 
+        $npmrcMount = "--mount type=bind,src=$NPM_FILE,target=/root/.npmrc" 
     }
 
     $gpgMount = ""
@@ -139,7 +139,7 @@ if ($VolumeOrDirectory) {
 
     $tz = "-e TZ=Europe/Berlin"
 
-    Invoke-Expression "docker run ${ports} ${name} --privileged --rm ${identityEnv} ${llmKeys} ${tz} --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmMount $gpgMount $sharedMount $historyMount $localMount $dockerMount $pipxMount $npmMount $kubeMount $ngrokMount $azureCacheMount -it --memory 24gb ${DOCKER_DEV_ENV}${tag}"
+    Invoke-Expression "docker run ${ports} ${name} --privileged --rm ${identityEnv} ${llmKeys} ${tz} --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmrcMount $gpgMount $sharedMount $historyMount $localMount $dockerMount $pipxMount $npmMount $kubeMount $ngrokMount $azureCacheMount -it --memory 24gb ${DOCKER_DEV_ENV}${tag}"
 
     # Undo title change
     $Host.UI.RawUI.WindowTitle = "Windows PowerShell"
