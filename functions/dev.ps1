@@ -1,7 +1,7 @@
-param (	
-	[string]$VolumeOrDirectory,
-	[string[]]$Port,
-  [string]$Tag
+param (
+    [string]$VolumeOrDirectory,
+    [string[]]$Port,
+    [string]$Tag
 )
 
 . "$PSScriptRoot/config.ps1"
@@ -15,7 +15,7 @@ if ($VolumeOrDirectory) {
 
     $availableVolumes = ($commandOutput -split "/n")
 
-    for($i=0; $i -lt $availableVolumes.length; $i++) {
+    for ($i = 0; $i -lt $availableVolumes.length; $i++) {
         $availableVolumes[$i] = $availableVolumes[$i].ToString().Trim()
     }
 
@@ -38,6 +38,16 @@ if ($VolumeOrDirectory) {
         $data.port = $Port
     }
 
+    # Ensure ports is an array
+    if (-not $data.port) {
+        $data.port = @()
+    }
+
+    # Always expose port 3010 (avoid duplicates whether number or string)
+    if (-not ($data.port -contains "3010") -and -not ($data.port -contains 3010)) {
+        $data.port += "3010"
+    }
+
     $ports = ""
     if ($data.port.Length -gt 0) {
         $prefix = "-p"
@@ -46,9 +56,9 @@ if ($VolumeOrDirectory) {
             $ports = $ports + $prefix + $mapping + " "
         }
     }
-    
+
     if ($Tag -AND $Tag -eq "null") {
-        $data.tag = "" 
+        $data.tag = ""
     } elseif ($Tag -And $Tag -ne "") {
         $data.tag = $Tag
     }
@@ -59,7 +69,7 @@ if ($VolumeOrDirectory) {
     }
 
     SaveConfig -Data $data
-    
+
     Write-Host "Starting environment with:"
     Write-Host "Ports:" $data.port
     Write-Host "Tag:" $data.tag
@@ -74,12 +84,12 @@ if ($VolumeOrDirectory) {
 
     $sshMount = ""
     if ($SSH_DIRECTORY) {
-        $sshMount = "--mount type=bind,src=$SSH_DIRECTORY,target=/root/.ssh" 
+        $sshMount = "--mount type=bind,src=$SSH_DIRECTORY,target=/root/.ssh"
     }
-	
-	$npmrcMount = ""
+
+    $npmrcMount = ""
     if ($NPM_FILE) {
-        $npmrcMount = "--mount type=bind,src=$NPM_FILE,target=/root/.npmrc" 
+        $npmrcMount = "--mount type=bind,src=$NPM_FILE,target=/root/.npmrc"
     }
 
     $gpgMount = ""
@@ -101,6 +111,7 @@ if ($VolumeOrDirectory) {
     if ($NGROK_DIRECTORY) {
         $ngrokMount = "--mount type=bind,src=$NGROK_DIRECTORY,target=/root/.config/ngrok"
     }
+
     $azureCacheMount = ""
     if ($AZURE_CACHE_DIRECTORY) {
         $azureCacheMount = "--mount type=bind,src=$AZURE_CACHE_DIRECTORY,target=/root/.azure"
@@ -115,26 +126,26 @@ if ($VolumeOrDirectory) {
     $npmMount = "--mount type=volume,src=dev-npm,target=/root/.npm"
 
     $identityEnv = ""
-    $activeIdentity = LoadActiveIdentity 
-    if($activeIdentity) {
-	    $identityEnvMail = $activeIdentity.email
-	    $identityEnvName = $activeIdentity.name
-	    $identityEnvKeyid = $activeIdentity.keyid
-      $identityEnv = "--env GIT_EMAIL=`"${identityEnvMail}`" --env GIT_USER=`"${identityEnvName}`" --env GIT_SIGNINGKEY=`"${identityEnvKeyid}`""
+    $activeIdentity = LoadActiveIdentity
+    if ($activeIdentity) {
+        $identityEnvMail = $activeIdentity.email
+        $identityEnvName = $activeIdentity.name
+        $identityEnvKeyid = $activeIdentity.keyid
+        $identityEnv = "--env GIT_EMAIL=`\"${identityEnvMail}`\" --env GIT_USER=`\"${identityEnvName}`\" --env GIT_SIGNINGKEY=`\"${identityEnvKeyid}`\""
     }
 
     $llmKeys = ""
     if ($GEMINI_API_KEY) {
-      $llmKeys = "${llmKeys} --env GEMINI_API_KEY=`"${GEMINI_API_KEY}`""
+        $llmKeys = "${llmKeys} --env GEMINI_API_KEY=`\"${GEMINI_API_KEY}`\""
     }
     if ($CLAUDE_API_KEY) {
-      $llmKeys = "${llmKeys} --env CLAUDE_API_KEY=`"${CLAUDE_API_KEY}`""
+        $llmKeys = "${llmKeys} --env CLAUDE_API_KEY=`\"${CLAUDE_API_KEY}`\""
     }
     if ($LLM_PROVIDER) {
-      $llmKeys = "${llmKeys} --env LLM_PROVIDER=`"${LLM_PROVIDER}`""
+        $llmKeys = "${llmKeys} --env LLM_PROVIDER=`\"${LLM_PROVIDER}`\""
     }
     if ($LLM_MODEL) {
-      $llmKeys = "${llmKeys} --env LLM_MODEL=`"${LLM_MODEL}`""
+        $llmKeys = "${llmKeys} --env LLM_MODEL=`\"${LLM_MODEL}`\""
     }
 
     $tz = "-e TZ=Europe/Berlin"
@@ -156,3 +167,4 @@ if ($VolumeOrDirectory) {
         }
     }
 }
+
