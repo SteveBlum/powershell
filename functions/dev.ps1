@@ -124,6 +124,7 @@ if ($VolumeOrDirectory) {
     $localMount = "--mount type=volume,src=$localVolume,target=/root/.local"
     $pipxMount = "--mount type=volume,src=dev-pipx,target=/root/.pipx"
     $npmMount = "--mount type=volume,src=dev-npm,target=/root/.npm"
+    $copilotMount = "--mount type=volume,src=dev-copilot,target=/root/.config/github-copilot"
 
     $identityEnv = ""
     $activeIdentity = LoadActiveIdentity
@@ -150,7 +151,7 @@ if ($VolumeOrDirectory) {
 
     $tz = "-e TZ=Europe/Berlin"
 
-    Invoke-Expression "docker run ${ports} ${name} --privileged --rm ${identityEnv} ${llmKeys} ${tz} --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmrcMount $gpgMount $sharedMount $historyMount $localMount $dockerMount $pipxMount $npmMount $kubeMount $ngrokMount $azureCacheMount -it --memory 24gb ${DOCKER_DEV_ENV}${tag}"
+    Invoke-Expression "docker run ${ports} ${name} --privileged --rm ${identityEnv} ${llmKeys} ${tz} --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmrcMount $gpgMount $sharedMount $historyMount $localMount $dockerMount $pipxMount $npmMount $copilotMount $kubeMount $ngrokMount $azureCacheMount -it --memory 24gb ${DOCKER_DEV_ENV}${tag}"
 
     # Undo title change
     $Host.UI.RawUI.WindowTitle = "Windows PowerShell"
