@@ -150,8 +150,9 @@ if ($VolumeOrDirectory) {
     }
 
     $tz = "-e TZ=Europe/Berlin"
-
-    Invoke-Expression "docker run ${ports} ${name} --privileged --rm ${identityEnv} ${llmKeys} ${tz} --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmrcMount $gpgMount $sharedMount $historyMount $localMount $dockerMount $pipxMount $npmMount $copilotMount $kubeMount $ngrokMount $azureCacheMount -it --memory 24gb ${DOCKER_DEV_ENV}${tag}"
+	
+	wsl.exe --distribution rancher-desktop /etc/local.d/startup.start
+	Invoke-Expression "docker run ${ports} ${name} --privileged --rm ${identityEnv} ${llmKeys} ${tz} -v /root/.gnupg/S.gpg-agent:/root/.gnupg/S.gpg-agent -v /root/.gnupg/S.gpg-agent.ssh:/root/.gnupg/S.gpg-agent.ssh --mount type=${mountType},src=${directoryOrVolume},target=/root/workspace $sshMount $npmrcMount $gpgMount $sharedMount $historyMount $localMount $dockerMount $pipxMount $npmMount $copilotMount $kubeMount $ngrokMount $azureCacheMount -it --memory 24gb ${DOCKER_DEV_ENV}${tag}"
 
     # Undo title change
     $Host.UI.RawUI.WindowTitle = "Windows PowerShell"
