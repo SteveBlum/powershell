@@ -139,6 +139,9 @@ if ($VolumeOrDirectory) {
     if ($GEMINI_API_KEY) {
         $llmKeys = "${llmKeys} --env GEMINI_API_KEY=`"${GEMINI_API_KEY}`""
     }
+    if ($GOOGLE_CLOUD_PROJECT_ID) {
+        $llmKeys = "${llmKeys} --env GOOGLE_CLOUD_PROJECT_ID=`"${GOOGLE_CLOUD_PROJECT_ID}`""
+    }
     if ($CLAUDE_API_KEY) {
         $llmKeys = "${llmKeys} --env CLAUDE_API_KEY=`"${CLAUDE_API_KEY}`""
     }
