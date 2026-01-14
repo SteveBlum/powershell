@@ -22,7 +22,7 @@ if ($VolumeOrDirectory) {
     $mountType = 'bind'
     if ($availableVolumes -contains $directoryOrVolume) {
         $mountType = 'volume'
-        $name = "--name=$directoryOrVolume"
+        $name = "--name=$directoryOrVolume --hostname=dev-${directoryOrVolume}"
     }
 
     $history = "dev-history"
