@@ -112,11 +112,6 @@ if ($VolumeOrDirectory) {
         $ngrokMount = "--mount type=bind,src=$NGROK_DIRECTORY,target=/root/.config/ngrok"
     }
 
-    $azureCacheMount = ""
-    if ($AZURE_CACHE_DIRECTORY) {
-        $azureCacheMount = "--mount type=bind,src=$AZURE_CACHE_DIRECTORY,target=/root/.azure"
-    }
-
     $localVolume = "dev-local"
 
     $dockerMount = "--mount type=bind,src=//var/run/docker.sock,target=//var/run/docker.sock"
@@ -125,6 +120,7 @@ if ($VolumeOrDirectory) {
     $pipxMount = "--mount type=volume,src=dev-pipx,target=/root/.pipx"
     $npmMount = "--mount type=volume,src=dev-npm,target=/root/.npm"
     $copilotMount = "--mount type=volume,src=dev-copilot,target=/root/.config/github-copilot"
+    $azureCacheMount = "--mount type=volume,src=dev-azure,target=/root/.azure"
 
     $identityEnv = ""
     $activeIdentity = LoadActiveIdentity
